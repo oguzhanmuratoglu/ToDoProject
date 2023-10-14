@@ -1,0 +1,54 @@
+<div class="main">
+  <h1 style="margin-top: 40px;">Todo App</h1>
+
+  <div *ngIf="alert"  class="alert alert-success" role="alert">
+    {{ alertMessage }}
+  </div>
+
+  <div *ngIf="changeName || add" class="operation">
+    <div>
+    <input [(ngModel)]="inputValue" class="form-control" placeholder="Change Name" style="width: auto;" type="text">
+    <span *ngIf="validateDisplay" style="color: red;">{{validate}}</span>
+  </div>
+    <button *ngIf="!add" class="btn btn-info" (click)="UpdateToDatabase()">Update</button>
+    <button *ngIf="!changeName" class="btn btn-success" (click)="addToDatabase()">Add</button>
+    <button class="btn btn-dark" (click)="cancel()">Cancel</button>
+  </div>
+
+<div class="example-container">
+  <div class="div1">
+  <h2>To do</h2>
+  <button  class="btn btn-primary add" (click)="addItem()">Add</button>
+</div>
+  <div
+    cdkDropList
+    #todoList="cdkDropList"
+    [cdkDropListData]="todo"
+    [cdkDropListConnectedTo]="[doneList]"
+    class="example-list"
+    (cdkDropListDropped)="drop1($event)">
+    <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item.work}}
+      <button class="btn btn-warning" (click)="changeItem(item)">Change Name</button>
+    </div>
+  </div>
+</div>
+
+<div class="example-container">
+  <h2 class="div1">Done</h2>
+
+  <div
+    cdkDropList
+    #doneList="cdkDropList"
+    [cdkDropListData]="done"
+    [cdkDropListConnectedTo]="[todoList]"
+    class="example-list"
+    (cdkDropListDropped)="drop2($event)">
+    <div class="example-box" *ngFor="let item of done" cdkDrag>{{item.work}}
+      <div>
+      <button class="btn btn-warning" (click)="changeItem(item)">Change Name</button>
+      <button class="btn btn-danger" (click)="deleteItem(item.id)">Delete</button>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
